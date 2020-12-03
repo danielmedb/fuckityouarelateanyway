@@ -1,0 +1,107 @@
+@font-face {
+	font-family: avenir;
+	src:
+		url('Avenir-light.woff2') format('woff2');
+}
+
+:root{
+    --main-border-color: #cacaca;
+    --main-bg-color: #eaeaea;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    /* overflow: hidden; */
+}
+
+.main {
+    display: grid;
+    width: 100vw;
+    height: 120vh;
+    justify-content: center;
+    align-content: center;
+    background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229));
+}
+
+.clock{
+    width: 400px;
+    height: 400px;
+    background-color: var(--main-bg-color);
+    border: 1px solid  var(--main-border-color);
+    border-radius: 50%;
+    position: fixed;
+    left: calc(50% - 200px);
+    top: calc(50% - 200px);
+}
+
+.clock .number{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.hour{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 8px;
+    height: 30%;
+    background-color: black;
+    transform-origin: bottom;
+    transform: translateX(-50%);
+    
+}
+
+.min{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 4px;
+    height: 40%;
+    background-color: black;
+    transform: translateX(-50%);
+    transform-origin: bottom;
+}
+
+.sec{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 2px;
+    height: 48%;
+    background-color: black;
+    transform: translateX(-50%);
+    transform-origin: bottom;
+}
+
+.zerofucksgiven{
+    position: fixed;
+    left: calc(50% - 206px);
+    top: 15%;
+    font-size: 2rem;
+    font-weight: bold;
+    padding-top: 20px;
+}
+.dot{
+    position: absolute;
+    top: calc(50% - 7px);
+    left: calc(50% - 5px);
+    width: 15px;
+    height: 14px;  
+    border-radius: 50%;
+    background-color: black;
+}
+/* img{
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 50px;
+} */
+
+.endless{
+    height: 200vh;
+    width: 100vw;
+}

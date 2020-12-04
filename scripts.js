@@ -59,31 +59,7 @@ window.addEventListener('scroll', () => {
     
     // console.log(scrollTop);
     if(clientHeight + scrollTop >= scrollHeight - 50 || scrollTop <= 450){
-
-        // If we scroll down(true) or up(false)!
-        console.log(scrollDirection);
-
-        // const lastElementColor = document.querySelector('.endless') === null ? main.dataset.color : main.lastElementChild.dataset.color;                       
-        // let endlessDiv = document.createElement('div');
-        
         createEndlessDiv(scrollDirection);
-        
-        // if(scrollDown === false){
-        //     const firstElementColor = document.querySelector('.endless').dataset.color;
-        //     console.log(firstElementColor);
-        //     scrollDownColors = random_bg_color(firstElementColor, firstElementColor);
-        //     console.log(scrollDownColors);
-        //     endlessDiv.classList.add('endless');
-        //     endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.second}, ${scrollDownColors.first})`);
-        //     endlessDiv.setAttribute('data-color', `${scrollDownColors.second}`);
-        //     main.prepend(endlessDiv);  
-        // }else{
-        //     scrollDownColors = random_bg_color(lastElementColor);
-        //     endlessDiv.classList.add('endless');
-        //     endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.first}, ${scrollDownColors.second})`);
-        //     endlessDiv.setAttribute('data-color', `${scrollDownColors.second}`);
-        //     main.append(endlessDiv);   
-        // }
     }
 });
 

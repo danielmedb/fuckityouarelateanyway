@@ -12,7 +12,6 @@
 *{
     box-sizing: border-box;
     margin: 0;
-    /* overflow: hidden; */
 }
 
 .main {
@@ -20,8 +19,7 @@
     width: 100vw;
     height: 120vh;
     justify-content: center;
-    align-content: center;
-    
+    align-content: center;    
 }
 /* background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229)); */
 .clock{
@@ -125,7 +123,7 @@
     }
 }
 
-.textW{
+.fuckit{
     position: fixed;
     left: calc(50% - 233px);
     top: calc(50% - 233px);

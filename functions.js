@@ -24,6 +24,11 @@ function random_bg_color(bgColor = null, second = null) {
         bgColor = `rgb(${x}, ${y}, ${z})`;
     }
 
+    // Set .main data-color
+    if(bgColor === 'setMainColor'){
+        bgColor = `rgb(${a}, ${b}, ${c})`;
+    }
+
 
     const nextbgColor = `rgb(${a}, ${b}, ${c})`;
     const colors = {
@@ -38,31 +43,31 @@ function createEndlessDiv(scrollDirection){
     const endlessDiv = document.createElement('div');
     endlessDiv.classList.add('endless');
 
-    // Get the first div with class endless and its color. If it doesnt exists. Get the .main color.
-    const lastElementColor = document.querySelector('.endless') === null ? main.dataset.color : main.lastElementChild.dataset.color;  
-     
+    // Get the first div with class endless and its color. If it doesnt exists. Set the .main color.
+    const lastElementColor = document.querySelector('.endless') === null ? 'setMainColor' : main.lastElementChild.dataset.color;  
+
     if(scrollDirection === 'Down'){
 
         // Lets get a random color for the next endless div.
         scrollDownColors = random_bg_color(lastElementColor);
 
+        if(lastElementColor === 'setMainColor'){
+            main.setAttribute('data-color', `${scrollDownColors.first}`);
+        }
         // Set background to linear-gradient
         endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.first}, ${scrollDownColors.second})`);
         endlessDiv.setAttribute('data-color', `${scrollDownColors.second}`);
-        endlessDiv.setAttribute('data-color-first', `${scrollDownColors.first}`);
+        endlessDiv.setAttribute('data-colorfirst', `${scrollDownColors.first}`);
         main.append(endlessDiv);
+
     }else{
+
+        // If scroll up
         const firstDivInScrollUp = document.querySelector('.clock').previousElementSibling;
         const elementColor = document.querySelector('.endless').dataset.color;
-
         scrollDownColors = random_bg_color(elementColor);
-        if(firstDivInScrollUp === null){
-            endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.first}, ${scrollDownColors.second})`);
-        }else{
-            endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.second}, ${scrollDownColors.first})`);
-        }
+        endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.second}, ${scrollDownColors.first})`);
         endlessDiv.setAttribute('data-color', `${scrollDownColors.second}`);
-        
         main.prepend(endlessDiv);  
     }
 }

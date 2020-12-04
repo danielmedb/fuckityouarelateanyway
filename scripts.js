@@ -35,7 +35,7 @@ let math = {
 window.addEventListener('scroll', () => {
     let scrollDownColors;
     // get first textW element
-    const firstTextwElement = document.querySelector('.textW');
+    // const firstTextwElement = document.querySelector('.textW');
        
     if((document.body.getBoundingClientRect()).top > scrollFromTop){
         usePlus = false;
@@ -46,12 +46,13 @@ window.addEventListener('scroll', () => {
     }
     scrollFromTop = (document.body.getBoundingClientRect()).top;
 
-    // get every textW class.
-    const fuckItText = document.querySelectorAll(".textW");
+    // get every fuckit class.
+    const fuckItText = document.querySelectorAll(".fuckit");
+    startingDeg = 80;
     [...fuckItText].forEach((element) => {
         let currentRotation = parseInt(element.dataset.rotation);
         element.setAttribute('data-rotation', math[usePlus ? '+' : '-'](currentRotation, distance));
-        element.style.transform = `rotate(${element.dataset.rotation}deg)`;
+        element.style.transform = `rotateZ(${element.dataset.rotation - startingDeg}deg)`;
     });
     
 
@@ -80,8 +81,7 @@ setInterval(function() {
     time.sec = (time.sec === 59 ? 0 : time.sec + 1);
     time.min = (time.sec === 0 ? time.min + 1 : time.min);
     time.hour = (time.min === 0 ? time.hour + 1 : time.hour);
-    
-   
+
     setClock(time.hour, time.min, time.sec);
 }, 1000);
 
@@ -92,12 +92,12 @@ const secElement = document.querySelector(".sec");
 
 [...text.textContent].forEach((i) => {
     
-    const countDivs = document.querySelectorAll('div.textW').length;
+    const countDivs = document.querySelectorAll('div.fuckit').length;
 
     const rotationPerCharacter = (180 / text.textContent.length).toFixed();
 
     let span = document.createElement('div');
-    span.classList.add('textW');
+    span.classList.add('fuckit');
     span.setAttribute('data-rotation', (rotationPerCharacter * countDivs));
     span.textContent = i;
     span.style.transform = `rotate(${rotationPerCharacter * countDivs}deg)`;

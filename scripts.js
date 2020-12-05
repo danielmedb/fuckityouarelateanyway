@@ -33,10 +33,7 @@ let math = {
 }
 
 window.addEventListener('scroll', () => {
-    let scrollDownColors;
-    // get first textW element
-    // const firstTextwElement = document.querySelector('.textW');
-       
+
     if((document.body.getBoundingClientRect()).top > scrollFromTop){
         usePlus = false;
         scrollDirection = 'Up';
@@ -54,11 +51,9 @@ window.addEventListener('scroll', () => {
         element.setAttribute('data-rotation', math[usePlus ? '+' : '-'](currentRotation, distance));
         element.style.transform = `rotateZ(${element.dataset.rotation - startingDeg}deg)`;
     });
-    
 
+    // Create a new endless div in the direction we are scrolling.
     const {scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    
-    // console.log(scrollTop);
     if(clientHeight + scrollTop >= scrollHeight - 50 || scrollTop <= 450){
         createEndlessDiv(scrollDirection);
     }
@@ -90,6 +85,8 @@ const hourElement = document.querySelector(".hour");
 const minElement = document.querySelector(".min");
 const secElement = document.querySelector(".sec");
 
+
+// Get the text around the clock and rotate it in a cricle.
 [...text.textContent].forEach((i) => {
     
     const countDivs = document.querySelectorAll('div.fuckit').length;

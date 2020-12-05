@@ -8,11 +8,6 @@ const text = document.querySelector('.zerofucksgiven');
 const clock = document.querySelector('.clock');
 
 
-const mainColor = random_bg_color();
-main.style.setProperty('background', `linear-gradient(${mainColor.first}, ${mainColor.second})`);
-
-
-
 for(let a = 0; a <= 5; a++){
     if(a % 2){
         createEndlessDiv('Up');

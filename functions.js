@@ -10,27 +10,30 @@ function setNewTime(){
     return time;
 }
 
+function color_generator(){
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 
 function random_bg_color(bgColor = null, second = null) {
-    const a = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    const c = Math.floor(Math.random() * 256);
     
     // set main as different colors every reload.
     if(bgColor === null){
         const x = Math.floor(Math.random() * 256);
         const y = Math.floor(Math.random() * 256);
         const z = Math.floor(Math.random() * 256);
-        bgColor = `rgb(${x}, ${y}, ${z})`;
+        bgColor = color_generator();
     }
 
     // Set .main data-color
     if(bgColor === 'setMainColor'){
-        bgColor = `rgb(${a}, ${b}, ${c})`;
+        bgColor = color_generator();
     }
 
-
-    const nextbgColor = `rgb(${a}, ${b}, ${c})`;
+    const nextbgColor = color_generator();
     const colors = {
         first : bgColor,
         second : nextbgColor
@@ -64,7 +67,11 @@ function createEndlessDiv(scrollDirection){
 
         // If scroll up
         const firstDivInScrollUp = document.querySelector('.clock').previousElementSibling;
-        const elementColor = document.querySelector('.endless').dataset.color;
+        if(firstDivInScrollUp === null){
+            elementColor = document.querySelector('.main').dataset.color;
+        }else{
+            elementColor = document.querySelector('.endless').dataset.color;
+        }
         scrollDownColors = random_bg_color(elementColor);
         endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.second}, ${scrollDownColors.first})`);
         endlessDiv.setAttribute('data-color', `${scrollDownColors.second}`);

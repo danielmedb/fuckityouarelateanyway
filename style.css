@@ -7,6 +7,7 @@
 :root{
     --main-border-color: #cacaca;
     --main-bg-color: #eaeaea;
+    --clock-color: #000;
 }
 
 *{
@@ -21,7 +22,6 @@
     justify-content: center;
     align-content: center;    
 }
-/* background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229)); */
 .clock{
     width: 400px;
     height: 400px;
@@ -29,8 +29,9 @@
     border: 1px solid  var(--main-border-color);
     border-radius: 50%;
     position: fixed;
-    left: calc(50% - 200px);
-    top: calc(50% - 200px);
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
     z-index: 3;
     background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229));
 }
@@ -50,12 +51,11 @@
 .hour{
     position: absolute;
     bottom: 50%;
-    left: 50%;
+    left: calc(50% - 4px);
     width: 8px;
     height: 30%;
-    background-color: black;
-    transform-origin: bottom;
-    transform: translateX(-50%);
+    background-color: var(--clock-color);
+    transform-origin: bottom center;
 }
 
 .min{
@@ -64,9 +64,9 @@
     left: 50%;
     width: 4px;
     height: 40%;
-    background-color: black;
+    background-color: var(--clock-color);
     transform: translateX(-50%);
-    transform-origin: bottom;
+    transform-origin: bottom center;
 }
 
 .sec{
@@ -75,14 +75,13 @@
     left: 50%;
     width: 2px;
     height: 48%;
-    background-color: black;
+    background-color: var(--clock-color);
     transform: translateX(-50%);
-    transform-origin: bottom;
+    transform-origin: bottom center; 
 }
 
 .zerofucksgiven{
     position: absolute;
-    left: calc(50% - 184px);
     top: 15%;
     font-size: 2rem;
     font-weight: bold;
@@ -94,13 +93,15 @@
 
 .dot{
     position: absolute;
-    top: calc(50% - 7px);
-    left: calc(50% - 5px);
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
     width: 15px;
     height: 14px;  
     border-radius: 50%;
-    background-color: black;
-}
+    background-color: var(--clock-color);
+    
+} 
 
 .endless{
     height: 150vh;
@@ -132,4 +133,97 @@
     text-align: center;
     font-weight: bold;
     font-size: 2rem;
+}
+
+.mouse {
+    position: fixed;
+    bottom: 10px;
+    border-radius: 20px;
+    left: 20px;
+    opacity: 1;
+    width: 35px;
+    height: 60px;
+    border: 1px solid #eaeaea;
+    background-color: #162133;
+    z-index: 3;
+  }
+.finger {
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    opacity: 1;
+    width: 35px;
+    height: 60px;
+    z-index: 3;
+}
+
+img.moveFinger{
+    position: absolute;
+    margin-top: 10px;
+    width: 100%;
+    animation: scrollWheel 2s ease-in-out infinite 2s;
+}
+
+.scrollWheel {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 10px;
+    width: 10px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #eaeaea;
+    animation: scrollWheel 2s ease-in-out infinite 2s;
+}
+.animationText{
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    opacity: 0;
+    z-index: 3;
+    font-size: 1.5rem;
+    color: #000;
+}
+
+@keyframes scrollWheel {
+    0% {
+        opacity: 1;
+        margin-top: 10px;
+    }
+
+    100% {
+        opacity: 0;
+        margin-top: 30px;
+    }
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .clock{
+        width: 300px;
+        height: 300px;
+    }
+    .fuckit{
+        left: calc(50% - 183px);
+        top: calc(50% - 183px);
+        width: 366px;
+        height: 366px;
+    }
 }

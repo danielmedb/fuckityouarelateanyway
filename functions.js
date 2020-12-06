@@ -22,9 +22,6 @@ function random_bg_color(bgColor = null, second = null) {
     
     // set main as different colors every reload.
     if(bgColor === null){
-        const x = Math.floor(Math.random() * 256);
-        const y = Math.floor(Math.random() * 256);
-        const z = Math.floor(Math.random() * 256);
         bgColor = color_generator();
     }
 
@@ -63,10 +60,11 @@ function createEndlessDiv(scrollDirection){
         endlessDiv.setAttribute('data-colorfirst', `${scrollDownColors.first}`);
         main.append(endlessDiv);
 
-    }else{
+    }else{ // If scroll up
 
-        // If scroll up
         const firstDivInScrollUp = document.querySelector('.clock').previousElementSibling;
+        
+        // Inherit mains data-color is there isnt any .endless above .clock.
         if(firstDivInScrollUp === null){
             elementColor = document.querySelector('.main').dataset.color;
         }else{
@@ -81,8 +79,7 @@ function createEndlessDiv(scrollDirection){
 
 
 function setClock(newHour, newMin, newSec){
-    const deg = 360;
-    
+
     // Make it go backwards
     // 366 so that it counts correctly and not 360
     // * 6 = Degrees
@@ -112,5 +109,3 @@ function createNumbers(){
         clock.append(number);
     }
 }
-
-createNumbers();

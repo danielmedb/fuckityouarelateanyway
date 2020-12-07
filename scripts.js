@@ -14,11 +14,11 @@ let settings = {
     startingDeg : 80, // In which degree shall the text start at?
     ScrollAnimation : {
         visible : true, // Show a mouse on desktop and finger on mobile devices.
-        desktop : 'mouse', // Icon that will be shown on mobile devices.
+        desktop : 'mouse', // Icon that will be shown on desktop devices.
         mobile : 'finger', // Icon that will be shown on mobile devices.
         fadeOut : 4, // When X new .endless divs has been created. Fade out the scroll animation. 
         fadeOutTime : 1, // Fade out time in seconds.
-        onFinishText : 'Fuck this!', // When animation is scrolled out, show this text.
+        onFinishText : 'Fuck this!', // When animation is done, show this text.
 
     }
 };

@@ -64,7 +64,7 @@ function createEndlessDiv(scrollDirection){
 
         const firstDivInScrollUp = document.querySelector('.clock').previousElementSibling;
         
-        // Inherit mains data-color is there isnt any .endless above .clock.
+        // Inherit mains data-color if there isnt any .endless above .clock.
         if(firstDivInScrollUp === null){
             elementColor = document.querySelector('.main').dataset.color;
         }else{

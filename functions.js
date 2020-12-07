@@ -58,6 +58,7 @@ function createEndlessDiv(scrollDirection){
         endlessDiv.style.setProperty('background', `linear-gradient(${scrollDownColors.first}, ${scrollDownColors.second})`);
         endlessDiv.setAttribute('data-color', `${scrollDownColors.second}`);
         endlessDiv.setAttribute('data-colorfirst', `${scrollDownColors.first}`);
+        endlessDiv.style.marginTop = '-1px'; // Mobile fix for removing white line between endless divs.
         main.append(endlessDiv);
 
     }else{ // If scroll up

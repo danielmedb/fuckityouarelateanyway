@@ -1,7 +1,6 @@
 
 
 
-
 // Set up global settings
 let settings = {
     scrollFromTop : 0, // To verify how close to the top we are.
@@ -11,7 +10,11 @@ let settings = {
     endless : 5, // How many endless divs shall we create on onload?
     scrollToDiv : 4, // Scroll down to the X .endless div to make it possible to scroll from start.
     fadeIn : 1, // How fast shall the clock pointers show. In seconds.
-    startingDeg : 80, // In which degree shall the text start at?
+    startingDeg : 88, // In which deg. shall the text start at?
+    showText : {
+        visible : false,
+        text : `Fuck it! You're late anyway`
+    },
     ScrollAnimation : {
         visible : true, // Show a mouse on desktop and finger on mobile devices.
         desktop : 'mouse', // Icon that will be shown on desktop devices.
@@ -19,8 +22,8 @@ let settings = {
         fadeOut : 4, // When X new .endless divs has been created. Fade out the scroll animation. 
         fadeOutTime : 1, // Fade out time in seconds.
         onFinishText : 'Fuck this!', // When animation is done, show this text.
-
-    }
+    },
+    fuckItExists : false // The magic when you click somewhere.
 };
 
 
@@ -29,10 +32,20 @@ const main = document.querySelector('.main');
 const text = document.querySelector('.zerofucksgiven');
 const clock = document.querySelector('.clock');
 
-// Scroll down to the settings.scrollToDiv .endless div to make it possible to scroll from start.
-window.onload = () => {
-   document.querySelectorAll('.endless')[settings.scrollToDiv].scrollIntoView();
 
+// Get hour, min and sec divs.
+const hourElement = document.querySelector(".hour");
+const minElement = document.querySelector(".min");
+const secElement = document.querySelector(".sec");
+const dotElement = document.querySelector(".dot");
+
+
+window.onload = () => {
+
+    // Scroll down to the settings.scrollToDiv .endless div to make it possible to scroll from start.
+    document.querySelectorAll('.endless')[settings.scrollToDiv].scrollIntoView();
+
+    // Show or hide scrolling animation.
     if(settings.ScrollAnimation.visible){
 
         const _this = settings.ScrollAnimation;
@@ -45,8 +58,28 @@ window.onload = () => {
         animation.append(motion);
         body.append(animation);
     }
-
 };
+
+
+if(settings.showText.visible){
+    const createText = document.createElement('div');
+    createText.classList.add('zerofucksgiven');
+    createText.textContent = settings.showText.text;
+    // clock.append(createText);
+}
+
+// Fade in the text.
+const fuckItText = document.querySelectorAll(".fuckit");
+
+[...fuckItText].forEach((element, index) => {
+
+    if (!element.style.animation) {
+        element.style.animation = `fadeIn 1s ease forwards ${
+            index / fuckItText.length + 1.4
+        }s`;
+    }
+});
+
 
 // Set H:m:s
 let newTime = setNewTime();
@@ -54,9 +87,11 @@ let newTime = setNewTime();
 // Create the numbers around the clock.
 createNumbers();
 
+// Get all number after createNumbers() is executed.
+const allNumbers = document.querySelectorAll('.number');
 
 
-// Create 6 endless divs.
+// Create endless divs.
 for(let a = 0; a <= settings.endless; a++){
     if(a % 2){
         createEndlessDiv('Up');
@@ -72,59 +107,12 @@ let math = {
 }
 
 
-window.addEventListener('scroll', () => {
-
-    if(settings.ScrollAnimation.visible){
-        // Remove scrollAnimation
-        const endlessDivsLength = document.querySelectorAll('.endless').length;
-        if(endlessDivsLength - 6 === settings.ScrollAnimation.fadeOut && settings.ScrollAnimation.visible){
-
-            const animationElement = document.querySelector((document.querySelector(".moveFinger") ? '.finger' : '.mouse'));
-            settings.ScrollAnimation.visible = false;
-            animationElement.style.animation = `fadeOut 2s ease forwards 0s`;
-            const text = document.createElement('div');
-            text.classList.add('animationText');
-            body.append(text);
-            text.textContent = settings.ScrollAnimation.onFinishText;
-            //text.style.animation = `fadeIn 2s ease forwards 2s`;
-        }
-        
-    }
-    if((document.body.getBoundingClientRect()).top > settings.scrollFromTop){
-        settings.usePlus = false;
-        settings.scrollDirection = 'Up';
-    }else{
-        settings.usePlus = true;
-        settings.scrollDirection = 'Down';
-    }
-    settings.scrollFromTop = (document.body.getBoundingClientRect()).top;
-   
-    // get every fuckit class.
-    const fuckItText = document.querySelectorAll(".fuckit");
-    [...fuckItText].forEach((element) => {
-        let currentRotation = parseInt(element.dataset.rotation);
-        element.setAttribute('data-rotation', math[settings.usePlus ? '+' : '-'](currentRotation, settings.textRotationSpeed));
-        element.style.transform = `rotateZ(${element.dataset.rotation - settings.startingDeg}deg)`;
-    });
-
-    // Create a new endless div in the direction we are scrolling.
-    const {scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if(clientHeight + scrollTop >= scrollHeight - 50 || scrollTop <= 450){
-        createEndlessDiv(settings.scrollDirection);
-    }
-});
-
-document.addEventListener('click', () => {
-    const fuckItText = text.textContent;
-
-});
-
-document.addEventListener('keypress', () => {
-    // body.style.background = random_bg_color();
-});
+document.addEventListener('scroll', handleScroll);
+document.addEventListener('click', handleClickPress);
+document.addEventListener('keypress', handleKeyPress);
 
 
-// Clone newTime if we want to use newTime somewhere else.
+// Clone newTime if we want to use newTime somewhere else so we dont mutate it!
 let time = {...newTime}
 setInterval(function() {
     
@@ -134,12 +122,6 @@ setInterval(function() {
 
     setClock(time.hour, time.min, time.sec);
 }, 1000);
-
-// Get hour, min and sec divs.
-const hourElement = document.querySelector(".hour");
-const minElement = document.querySelector(".min");
-const secElement = document.querySelector(".sec");
-
 
 // Get the text around the clock and rotate it in a cricle.
 [...text.textContent].forEach((i) => {
@@ -155,3 +137,4 @@ const secElement = document.querySelector(".sec");
     span.style.transform = `rotate(${rotationPerCharacter * countDivs}deg)`;
     clock.append(span);
 });
+

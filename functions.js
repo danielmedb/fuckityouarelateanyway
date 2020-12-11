@@ -110,3 +110,137 @@ function createNumbers(){
         clock.append(number);
     }
 }
+
+
+const handleScroll= () => {
+    if(settings.ScrollAnimation.visible){
+        // Remove scrollAnimation
+        const endlessDivsLength = document.querySelectorAll('.endless').length;
+        if(endlessDivsLength - 6 === settings.ScrollAnimation.fadeOut && settings.ScrollAnimation.visible){
+
+            const animationElement = document.querySelector((document.querySelector(".moveFinger") ? '.finger' : '.mouse'));
+            settings.ScrollAnimation.visible = false;
+            animationElement.style.animation = `fadeOut 2s ease forwards 0s`;
+            const text = document.createElement('div');
+            text.classList.add('animationText');
+            body.append(text);
+            text.textContent = settings.ScrollAnimation.onFinishText;
+            //text.style.animation = `fadeIn 2s ease forwards 2s`;
+        }
+        
+    }
+    if((document.body.getBoundingClientRect()).top > settings.scrollFromTop){
+        settings.usePlus = false;
+        settings.scrollDirection = 'Up';
+    }else{
+        settings.usePlus = true;
+        settings.scrollDirection = 'Down';
+    }
+    settings.scrollFromTop = (document.body.getBoundingClientRect()).top;
+   
+    // get every fuckit class.
+    const fuckItText = document.querySelectorAll(".fuckit");
+    [...fuckItText].forEach((element) => {
+        let currentRotation = parseInt(element.dataset.rotation);
+        element.setAttribute('data-rotation', math[settings.usePlus ? '+' : '-'](currentRotation, settings.textRotationSpeed));
+        element.style.transform = `rotateZ(${currentRotation - settings.textRotationSpeed}deg)`;
+        // element.style.transform = `rotateZ(${element.dataset.rotation - settings.startingDeg}deg)`;
+    });
+
+    // Create a new endless div in the direction we are scrolling.
+    const {scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if(clientHeight + scrollTop >= scrollHeight - 50 || scrollTop <= 450){
+        createEndlessDiv(settings.scrollDirection);
+    }
+};
+const handleClickPress = () => {
+    // change clock color
+    color = random_bg_color();
+    clock.style.setProperty('background', `linear-gradient(${color.second}, ${color.first})`);
+
+};
+
+
+const handleKeyPress = () => {
+
+    const fucks = 'FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK';
+    const fuckDiv = document.querySelector(".fucks");
+    const fuckDivLength = fucks.length;
+    const fuckVideo = document.querySelector("#fuckVideo");
+    
+
+ 
+
+    if(settings.fuckItExists === false){    
+        fuckVideo.play();
+        settings.fuckItExists = true;
+
+        const startVideo = new Promise((resolve, reject) => {
+            initiateVideo('none');
+            setTimeout(() => {
+                
+                for(let i = 0; i < fucks.length; i++){
+                    const rotation = ((360 / fuckDivLength) * i).toFixed();
+                    const newDiv = document.createElement('div');
+                    newDiv.setAttribute('data-id', i);
+                    newDiv.classList.add('fuckitText');
+                    newDiv.textContent = fucks[i];
+                    newDiv.style.transform = `rotate(${rotation}deg)`;
+    
+                    if (!newDiv.style.animation) {
+                        newDiv.style.animation = `fadeIn 1s ease forwards ${
+                            i*2 / fuckDivLength
+                        }s`;
+                    }
+                    fuckDiv.append(newDiv);
+                };
+
+                resolve({message : "1"});
+            }, 7800);
+        });
+    
+        startVideo.then(removeVideo);
+
+        startVideo;
+    }
+};
+
+function removeVideo(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {        
+            
+            initiateVideo('block');
+            settings.fuckItExists = false;
+        }, 5000);
+    });
+}
+
+
+
+
+
+ 
+function initiateVideo(state){
+    const fuckItText = document.querySelectorAll(".fuckit");
+    const fuuuuuck = document.querySelectorAll(".fuckitText");
+    if(state === 'block'){
+        fuuuuuck.forEach((fuck) => {
+            fuck.style.display = 'none';
+            fuckVideo.style.display = 'none';
+        });
+    }else{
+        fuckVideo.style.display = 'block';
+    }
+    hourElement.style.display = state;
+    minElement.style.display = state;
+    secElement.style.display = state;
+    dotElement.style.display = state;
+
+    fuckItText.forEach((text) => {
+        text.style.display = state;
+    });
+    allNumbers.forEach((number) => {
+        number.style.display = state;
+    });
+    
+}

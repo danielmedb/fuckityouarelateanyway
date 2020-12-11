@@ -33,7 +33,7 @@
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     z-index: 3;
-    background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229));
+    /* background: linear-gradient(rgb(230, 100, 101), rgb(145, 152, 229)); */
     box-shadow: -1px 3px 13px 4px grey;
 }
 
@@ -161,7 +161,6 @@
     z-index: 5;
     height: 400px;
     width: 400px;
-    display: none;
     background-color: black;
 }
 
@@ -213,6 +212,12 @@ img.moveFinger{
     z-index: 3;
     font-size: 1.5rem;
     color: #000;
+}
+
+.hide {
+    display: none !important;
+    visibility: hidden !important;
+    font-size: 5rem;
 }
 
 @keyframes scrollWheel {

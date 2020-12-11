@@ -11,10 +11,7 @@ let settings = {
     scrollToDiv : 4, // Scroll down to the X .endless div to make it possible to scroll from start.
     fadeIn : 1, // How fast shall the clock pointers show. In seconds.
     startingDeg : 88, // In which deg. shall the text start at?
-    showText : {
-        visible : false,
-        text : `Fuck it! You're late anyway`
-    },
+    fuckItExists : false, // The magic when you click somewhere.
     ScrollAnimation : {
         visible : true, // Show a mouse on desktop and finger on mobile devices.
         desktop : 'mouse', // Icon that will be shown on desktop devices.
@@ -23,9 +20,15 @@ let settings = {
         fadeOutTime : 1, // Fade out time in seconds.
         onFinishText : 'Fuck this!', // When animation is done, show this text.
     },
-    fuckItExists : false // The magic when you click somewhere.
+    onVideo : {
+        hide : {
+           'single' : ['.hour', '.min', '.sec', '.dot', '.fucksVideo'],
+           'multi' : ['.fuckit', '.number', '.fuckitText']
+        },
+        
+    },
+    
 };
-
 
 const body = document.querySelector('body');
 const main = document.querySelector('.main');
@@ -61,12 +64,6 @@ window.onload = () => {
 };
 
 
-if(settings.showText.visible){
-    const createText = document.createElement('div');
-    createText.classList.add('zerofucksgiven');
-    createText.textContent = settings.showText.text;
-    // clock.append(createText);
-}
 
 // Fade in the text.
 const fuckItText = document.querySelectorAll(".fuckit");
@@ -101,15 +98,6 @@ for(let a = 0; a <= settings.endless; a++){
 }
 
 
-let math = {
-    '+' : function(x,y) {return x + y;},
-    '-' : function(x,y) {return x - y;}
-}
-
-
-document.addEventListener('scroll', handleScroll);
-document.addEventListener('click', handleClickPress);
-document.addEventListener('keypress', handleKeyPress);
 
 
 // Clone newTime if we want to use newTime somewhere else so we dont mutate it!
@@ -124,8 +112,7 @@ setInterval(function() {
 }, 1000);
 
 // Get the text around the clock and rotate it in a cricle.
-[...text.textContent].forEach((i) => {
-    
+[...text.textContent].forEach((index, key) => {
     const countDivs = document.querySelectorAll('div.fuckit').length;
 
     const rotationPerCharacter = (180 / text.textContent.length).toFixed();
@@ -133,8 +120,16 @@ setInterval(function() {
     let span = document.createElement('div');
     span.classList.add('fuckit');
     span.setAttribute('data-rotation', (rotationPerCharacter * countDivs));
-    span.textContent = i;
-    span.style.transform = `rotate(${rotationPerCharacter * countDivs}deg)`;
+    span.textContent = index;
+    span.style.opacity = 0;
+
+    span.style.animation = `fadeIn 1s ease forwards ${
+        key / text.textContent.length + 0.4
+    }s`;    
     clock.append(span);
 });
 
+// Event handlers 
+document.addEventListener('scroll', handleScroll);
+document.addEventListener('click', handleClickPress);
+document.addEventListener('keypress', handleKeyPress);

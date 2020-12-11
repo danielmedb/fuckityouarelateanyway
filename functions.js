@@ -112,6 +112,13 @@ function createNumbers(){
 }
 
 
+
+let math = {
+    '+' : function(x,y) {return x + y;},
+    '-' : function(x,y) {return x - y;}
+}
+
+
 const handleScroll= () => {
     if(settings.ScrollAnimation.visible){
         // Remove scrollAnimation
@@ -143,8 +150,8 @@ const handleScroll= () => {
     [...fuckItText].forEach((element) => {
         let currentRotation = parseInt(element.dataset.rotation);
         element.setAttribute('data-rotation', math[settings.usePlus ? '+' : '-'](currentRotation, settings.textRotationSpeed));
-        element.style.transform = `rotateZ(${currentRotation - settings.textRotationSpeed}deg)`;
-        // element.style.transform = `rotateZ(${element.dataset.rotation - settings.startingDeg}deg)`;
+        //element.style.transform = `rotateZ(${currentRotation - settings.textRotationSpeed}deg)`;
+        element.style.transform = `rotateZ(${element.dataset.rotation - settings.startingDeg}deg)`;
     });
 
     // Create a new endless div in the direction we are scrolling.
@@ -155,8 +162,8 @@ const handleScroll= () => {
 };
 const handleClickPress = () => {
     // change clock color
-    color = random_bg_color();
-    clock.style.setProperty('background', `linear-gradient(${color.second}, ${color.first})`);
+    //color = random_bg_color();
+    //clock.style.setProperty('background', `linear-gradient(${color.second}, ${color.first})`);
 
 };
 
@@ -172,11 +179,12 @@ const handleKeyPress = () => {
  
 
     if(settings.fuckItExists === false){    
-        fuckVideo.play();
+        
         settings.fuckItExists = true;
 
         const startVideo = new Promise((resolve, reject) => {
-            initiateVideo('none');
+            initiateVideo();
+            fuckVideo.play();
             setTimeout(() => {
                 
                 for(let i = 0; i < fucks.length; i++){
@@ -209,7 +217,7 @@ function removeVideo(){
     return new Promise((resolve, reject) => {
         setTimeout(() => {        
             
-            initiateVideo('block');
+            initiateVideo();
             settings.fuckItExists = false;
         }, 5000);
     });
@@ -220,27 +228,15 @@ function removeVideo(){
 
 
  
-function initiateVideo(state){
-    const fuckItText = document.querySelectorAll(".fuckit");
-    const fuuuuuck = document.querySelectorAll(".fuckitText");
-    if(state === 'block'){
-        fuuuuuck.forEach((fuck) => {
-            fuck.style.display = 'none';
-            fuckVideo.style.display = 'none';
+function initiateVideo(){
+    settings.onVideo.hide.single.forEach((div) => {
+        document.querySelector(`${div}`).classList.toggle('hide');
+        
+    });
+    settings.onVideo.hide.multi.forEach((div) => {
+        let divs = document.querySelectorAll(`${div}`);
+        divs.forEach((div) => {
+            div.classList.toggle('hide');
         });
-    }else{
-        fuckVideo.style.display = 'block';
-    }
-    hourElement.style.display = state;
-    minElement.style.display = state;
-    secElement.style.display = state;
-    dotElement.style.display = state;
-
-    fuckItText.forEach((text) => {
-        text.style.display = state;
-    });
-    allNumbers.forEach((number) => {
-        number.style.display = state;
-    });
-    
+    });    
 }

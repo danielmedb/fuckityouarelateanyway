@@ -134,18 +134,7 @@
     }
 }
 
-.fuckit{
-    position: fixed;
-    left: calc(50% - 233px);
-    top: calc(50% - 233px);
-    width: 466px;
-    height: 466px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 2rem;
-    /* opacity: 0; */
-}
-.fuckitText{
+.textAroundCircle{
     position: fixed;
     left: calc(50% - 233px);
     top: calc(50% - 233px);
@@ -156,6 +145,18 @@
     font-size: 2rem;
     opacity: 0;
 }
+.textAroundCircle__onvideo{
+    position: fixed;
+    left: calc(50% - 233px);
+    top: calc(50% - 233px);
+    width: 466px;
+    height: 466px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    opacity: 0;
+}
+
 #fucksVideo, #fuckVideo{
     border-radius: 50%;
     z-index: 5;
@@ -264,7 +265,13 @@ img.moveFinger{
         width: 300px;
         height: 300px;
     }
-    .fuckit, .fuckitText{
+    .textAroundCircle{
+        left: calc(50% - 183px);
+        top: calc(50% - 183px);
+        width: 366px;
+        height: 366px;
+    }
+    .textAroundCircle__onvideo{
         left: calc(50% - 183px);
         top: calc(50% - 183px);
         width: 366px;

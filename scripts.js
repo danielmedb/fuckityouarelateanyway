@@ -1,17 +1,18 @@
 
 
 
+
 // Set up global settings
 let settings = {
+    touchEvent : 'ontouchstart' in window ? 'touchstart' : 'click', // on mobile or desktop?
     scrollFromTop : 0, // To verify how close to the top we are.
-    textRotationSpeed : 4, // How many degrees will the text rotate while we are scrolling
+    textRotationSpeed : 12, // How many degrees will the text rotate while we are scrolling
     usePlus : true, // Depending on we scroll up or down. 
     ScrollDirection : '', // Will be set to "Up" or "Down" to verify in which direction we are scrolling.
     endless : 5, // How many endless divs shall we create on onload?
     scrollToDiv : 4, // Scroll down to the X .endless div to make it possible to scroll from start.
     fadeIn : 1, // How fast shall the clock pointers show. In seconds.
     startingDeg : 88, // In which deg. shall the text start at?
-    fuckItExists : false, // The magic when you click somewhere.
     ScrollAnimation : {
         visible : true, // Show a mouse on desktop and finger on mobile devices.
         desktop : 'mouse', // Icon that will be shown on desktop devices.
@@ -21,13 +22,11 @@ let settings = {
         onFinishText : 'Fuck this!', // When animation is done, show this text.
     },
     onVideo : {
-        hide : {
            'single' : ['.hour', '.min', '.sec', '.dot', '.fucksVideo'],
-           'multi' : ['.fuckit', '.number', '.fuckitText']
-        },
-        
+           'multi' : ['.number', '.textAroundCircle'],
+           'textAroundCircle' : 'FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK',
+           'playing' : false
     },
-    
 };
 
 const body = document.querySelector('body');
@@ -63,21 +62,6 @@ window.onload = () => {
     }
 };
 
-
-
-// Fade in the text.
-const fuckItText = document.querySelectorAll(".fuckit");
-
-[...fuckItText].forEach((element, index) => {
-
-    if (!element.style.animation) {
-        element.style.animation = `fadeIn 1s ease forwards ${
-            index / fuckItText.length + 1.4
-        }s`;
-    }
-});
-
-
 // Set H:m:s
 let newTime = setNewTime();
 
@@ -98,8 +82,6 @@ for(let a = 0; a <= settings.endless; a++){
 }
 
 
-
-
 // Clone newTime if we want to use newTime somewhere else so we dont mutate it!
 let time = {...newTime}
 setInterval(function() {
@@ -113,12 +95,12 @@ setInterval(function() {
 
 // Get the text around the clock and rotate it in a cricle.
 [...text.textContent].forEach((index, key) => {
-    const countDivs = document.querySelectorAll('div.fuckit').length;
+    const countDivs = document.querySelectorAll('div.textAroundCircle').length;
 
     const rotationPerCharacter = (180 / text.textContent.length).toFixed();
 
     let span = document.createElement('div');
-    span.classList.add('fuckit');
+    span.classList.add('textAroundCircle');
     span.setAttribute('data-rotation', (rotationPerCharacter * countDivs));
     span.textContent = index;
     span.style.opacity = 0;

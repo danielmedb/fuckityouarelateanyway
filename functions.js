@@ -111,13 +111,10 @@ function createNumbers(){
     }
 }
 
-
-
 let math = {
     '+' : function(x,y) {return x + y;},
     '-' : function(x,y) {return x - y;}
 }
-
 
 const handleScroll= () => {
     if(settings.ScrollAnimation.visible){
@@ -146,8 +143,8 @@ const handleScroll= () => {
     settings.scrollFromTop = (document.body.getBoundingClientRect()).top;
    
     // get every fuckit class.
-    const fuckItText = document.querySelectorAll(".fuckit");
-    [...fuckItText].forEach((element) => {
+    const textAroundCircle = document.querySelectorAll(".textAroundCircle");
+    [...textAroundCircle].forEach((element) => {
         let currentRotation = parseInt(element.dataset.rotation);
         element.setAttribute('data-rotation', math[settings.usePlus ? '+' : '-'](currentRotation, settings.textRotationSpeed));
         //element.style.transform = `rotateZ(${currentRotation - settings.textRotationSpeed}deg)`;
@@ -170,70 +167,58 @@ const handleClickPress = () => {
 
 const handleKeyPress = () => {
 
-    const fucks = 'FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK';
     const fuckDiv = document.querySelector(".fucks");
-    const fuckDivLength = fucks.length;
+    const fuckDivLength = settings.onVideo.textAroundCircle.length;
     const fuckVideo = document.querySelector("#fuckVideo");
     
-
- 
-
-    if(settings.fuckItExists === false){    
-        
-        settings.fuckItExists = true;
-
+    if(settings.onVideo.playing === false){    
+        settings.onVideo.playing = true;
         const startVideo = new Promise((resolve, reject) => {
             initiateVideo();
             fuckVideo.play();
             setTimeout(() => {
-                
-                for(let i = 0; i < fucks.length; i++){
+                for(let i = 0; i < fuckDivLength; i++){
                     const rotation = ((360 / fuckDivLength) * i).toFixed();
-                    const newDiv = document.createElement('div');
-                    newDiv.setAttribute('data-id', i);
-                    newDiv.classList.add('fuckitText');
-                    newDiv.textContent = fucks[i];
-                    newDiv.style.transform = `rotate(${rotation}deg)`;
-    
-                    if (!newDiv.style.animation) {
-                        newDiv.style.animation = `fadeIn 1s ease forwards ${
+
+                    const element = document.createElement('div');
+                    element.setAttribute('data-id', i);
+                    element.classList.add('textAroundCircle__onvideo');
+                    element.textContent = settings.onVideo.textAroundCircle[i];
+                    element.style.transform = `rotate(${rotation}deg)`;
+                    if (!element.style.animation) {
+                        element.style.animation = `fadeIn 1s ease forwards ${
                             i*2 / fuckDivLength
                         }s`;
                     }
-                    fuckDiv.append(newDiv);
+                    fuckDiv.append(element);
                 };
-
-                resolve({message : "1"});
+                resolve({message : "success"});
             }, 7800);
         });
-    
         startVideo.then(removeVideo);
-
         startVideo;
     }
 };
 
 function removeVideo(){
     return new Promise((resolve, reject) => {
-        setTimeout(() => {        
-            
+        setTimeout(() => {                    
             initiateVideo();
-            settings.fuckItExists = false;
+            document.querySelectorAll(".textAroundCircle__onvideo").forEach((characters) => {
+                characters.remove();
+            });
+
+            settings.onVideo.playing = false;
         }, 5000);
     });
 }
 
-
-
-
-
- 
 function initiateVideo(){
-    settings.onVideo.hide.single.forEach((div) => {
+    settings.onVideo.single.forEach((div) => {
         document.querySelector(`${div}`).classList.toggle('hide');
         
     });
-    settings.onVideo.hide.multi.forEach((div) => {
+    settings.onVideo.multi.forEach((div) => {
         let divs = document.querySelectorAll(`${div}`);
         divs.forEach((div) => {
             div.classList.toggle('hide');

@@ -111,11 +111,13 @@ function createNumbers(){
     }
 }
 
+// + if we scroll down and - if we scroll up.
 let math = {
     '+' : function(x,y) {return x + y;},
     '-' : function(x,y) {return x - y;}
 }
 
+// When we are scrolling
 const handleScroll= () => {
     if(settings.ScrollAnimation.visible){
         // Remove scrollAnimation
@@ -142,7 +144,7 @@ const handleScroll= () => {
     }
     settings.scrollFromTop = (document.body.getBoundingClientRect()).top;
    
-    // get every fuckit class.
+    // get every textAroundCircle class.
     const textAroundCircle = document.querySelectorAll(".textAroundCircle");
     [...textAroundCircle].forEach((element) => {
         let currentRotation = parseInt(element.dataset.rotation);
@@ -157,15 +159,20 @@ const handleScroll= () => {
         createEndlessDiv(settings.scrollDirection);
     }
 };
-const handleClickPress = () => {
-    // change clock color
-    //color = random_bg_color();
-    //clock.style.setProperty('background', `linear-gradient(${color.second}, ${color.first})`);
 
+// if we click inside the clock class. Play the video.
+
+const handleClickPress = () => {
+    playVideo();
 };
 
 
 const handleKeyPress = () => {
+    playVideo();
+
+};
+
+function playVideo(){
 
     const fuckDiv = document.querySelector(".fucks");
     const fuckDivLength = settings.onVideo.textAroundCircle.length;
@@ -198,7 +205,7 @@ const handleKeyPress = () => {
         startVideo.then(removeVideo);
         startVideo;
     }
-};
+}
 
 function removeVideo(){
     return new Promise((resolve, reject) => {

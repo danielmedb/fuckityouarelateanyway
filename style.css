@@ -1,18 +1,21 @@
 @font-face {
-	font-family: avenir;
+	font-family: 'Avenir-light';
 	src:
-		url('Avenir-light.woff2') format('woff2');
+        url('Avenir-light.woff2') format('woff2'),
+        url('Avenir-Light.woff') format('woff');
 }
 
 :root{
     --main-border-color: #cacaca;
     --main-bg-color: #eaeaea;
     --clock-color: #000;
+    --common-font: 'Avenir-light';
 }
 
 *{
+    font-family: var(--common-font);
     box-sizing: border-box;
-    margin: 0;
+    margin: 0;   
 }
 
 .main {
@@ -85,7 +88,6 @@
     position: absolute;
     top: 15%;
     font-size: 2rem;
-    font-weight: bold;
     padding-top: 20px;
     transform-origin: bottom center;
     z-index: 3;
@@ -95,7 +97,6 @@
     position: absolute;
     top: 15%;
     font-size: 2rem;
-    font-weight: bold;
     padding-top: 20px;
     transform-origin: bottom center;
     z-index: 3;
@@ -141,7 +142,6 @@
     width: 466px;
     height: 466px;
     text-align: center;
-    font-weight: bold;
     font-size: 2rem;
     opacity: 0;
 }
@@ -152,7 +152,6 @@
     width: 466px;
     height: 466px;
     text-align: center;
-    font-weight: bold;
     font-size: 2rem;
     opacity: 0;
 }
@@ -281,5 +280,8 @@ img.moveFinger{
     #fucksVideo, #fuckVideo{
         width: 300px;
         height: 300px;
+    }
+    .endless{
+        margin-top: -1px; /* In mobile view there is a gap between the divs. This little boy fixes it! */
     }
 }

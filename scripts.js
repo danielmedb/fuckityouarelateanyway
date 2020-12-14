@@ -5,23 +5,24 @@
 // Set up global settings
 let settings = {
     touchEvent : 'ontouchstart' in window ? 'touchstart' : 'click', // on mobile or desktop?
-    scrollFromTop : 0, // To verify how close to the top we are.
-    textRotationSpeed : 12, // How many degrees will the text rotate while we are scrolling
-    usePlus : true, // Depending on we scroll up or down. 
+    scrollFromTop : 0, // To verify how close to the top we are. This will change as we scroll.
+    textRotationSpeed : 12, // How many degrees will the textAroundCricle rotate when we are scrolling.
+    usePlus : true, // Depending if we scroll up or down. This will change to "true" or "false" when we are scrolling.
     ScrollDirection : '', // Will be set to "Up" or "Down" to verify in which direction we are scrolling.
-    endless : 5, // How many endless divs shall we create on onload?
+    endless : 5, // How many endless divs that will be created on load.
     scrollToDiv : 4, // Scroll down to the X .endless div to make it possible to scroll from start.
-    fadeIn : 1, // How fast shall the clock pointers show. In seconds.
-    startingDeg : 88, // In which deg. shall the text start at?
+    fadeIn : 1, // Fade in time for the clock.
+    startingDeg : 88, // In which deg. should textAroundCircle start at.
+    textAroundCircle : `Fuck it! You're late anyway.`,
     ScrollAnimation : {
         visible : true, // Show a mouse on desktop and finger on mobile devices.
         desktop : 'mouse', // Icon that will be shown on desktop devices.
         mobile : 'finger', // Icon that will be shown on mobile devices.
-        fadeOut : 4, // When X new .endless divs has been created. Fade out the scroll animation. 
+        fadeOut : 4, // When X new .endless divs has been created when scrolling. Fade out the scroll animation. 
         fadeOutTime : 1, // Fade out time in seconds.
-        onFinishText : 'Fuck this!', // When animation is done, show this text.
+        onFinishText : '', // When animation is done, show this text.
     },
-    onVideo : {
+    onVideo : { // Video settings.
            'single' : ['.hour', '.min', '.sec', '.dot', '.fucksVideo'],
            'multi' : ['.number', '.textAroundCircle'],
            'textAroundCircle' : 'FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK',
@@ -29,11 +30,18 @@ let settings = {
     },
 };
 
+
+
 const body = document.querySelector('body');
 const main = document.querySelector('.main');
-const text = document.querySelector('.zerofucksgiven');
 const clock = document.querySelector('.clock');
 
+const createTextAroundCircle = document.createElement('div');
+createTextAroundCircle.classList.add('zerofucksgiven');
+createTextAroundCircle.textContent = settings.textAroundCircle;
+clock.append(createTextAroundCircle);
+
+const text = document.querySelector('.zerofucksgiven');
 
 // Get hour, min and sec divs.
 const hourElement = document.querySelector(".hour");
@@ -112,6 +120,6 @@ setInterval(function() {
 });
 
 // Event handlers 
+clock.addEventListener('click', handleClickPress);
 document.addEventListener('scroll', handleScroll);
-document.addEventListener('click', handleClickPress);
 document.addEventListener('keypress', handleKeyPress);
